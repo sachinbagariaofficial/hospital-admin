@@ -12,11 +12,14 @@ import FormElements from "./pages/Form/FormElements";
 import FormLayout from "./pages/Form/FormLayout";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
-import Tables from "./pages/Tables";
+
 import Alerts from "./pages/UiElements/Alerts";
 import Buttons from "./pages/UiElements/Buttons";
 import DefaultLayout from "./layout/DefaultLayout";
-import Hospital from "./pages/Zrso/Hospital/Hospital";
+
+import Hospitals from "./pages/Zrso/hospitals/Hospitals";
+import Doctors from "./pages/Zrso/doctors/Doctors";
+import Specialities from "./pages/Zrso/specialities/Specialities";
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -80,15 +83,7 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/tables"
-          element={
-            <>
-              <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Tables />
-            </>
-          }
-        />
+
         <Route
           path="/settings"
           element={
@@ -144,11 +139,29 @@ function App() {
           }
         />
         <Route
-          path="/hospital"
+          path="/hospitals"
           element={
             <>
               <PageTitle title="Hospital | Zrso - Hospital CSS Admin  Template" />
-              <Hospital />
+              <Hospitals />
+            </>
+          }
+        />
+        <Route
+          path="/doctors"
+          element={
+            <>
+              <PageTitle title="Doctors | Zrso - Hospital CSS Admin  Template" />
+              <Doctors />
+            </>
+          }
+        />
+        <Route
+          path="/specialities"
+          element={
+            <>
+              <PageTitle title="Specialities | Zrso - Hospital CSS Admin  Template" />
+              <Specialities />
             </>
           }
         />

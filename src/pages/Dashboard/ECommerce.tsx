@@ -1,11 +1,11 @@
-import React from 'react';
-import CardDataStats from '../../components/CardDataStats';
-import ChartOne from '../../components/Charts/ChartOne';
-import ChartThree from '../../components/Charts/ChartThree';
-import ChartTwo from '../../components/Charts/ChartTwo';
-import ChatCard from '../../components/Chat/ChatCard';
-import MapOne from '../../components/Maps/MapOne';
-import TableOne from '../../components/Tables/TableOne';
+import React from "react";
+import CardDataStats from "../../components/CardDataStats";
+import ChartOne from "../../components/Charts/ChartOne";
+import ChartThree from "../../components/Charts/ChartThree";
+import ChartTwo from "../../components/Charts/ChartTwo";
+import ChatCard from "../../components/Chat/ChatCard";
+import MapOne from "../../components/Maps/MapOne";
+import Table from "../Zrso/doctors/table/Table";
 
 const ECommerce: React.FC = () => {
   return (
@@ -103,7 +103,7 @@ const ECommerce: React.FC = () => {
         <ChartThree />
         <MapOne />
         <div className="col-span-12 xl:col-span-8">
-          <TableOne />
+          <Table />
         </div>
         <ChatCard />
       </div>

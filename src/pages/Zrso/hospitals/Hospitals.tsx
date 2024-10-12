@@ -1,11 +1,11 @@
 import React from "react";
 import Breadcrumb from "../../../components/Breadcrumbs/Breadcrumb";
 
-const Hospital = () => {
+const Hospitals = () => {
   return (
     <>
       <div className="mx-auto max-w-270">
-        <Breadcrumb pageName="Settings" />
+        <Breadcrumb pageName="Hospitals" />
 
         <div className="grid grid-cols-5 gap-8 ">
           <div className="col-span-8 xl:col-span-5">
@@ -215,4 +215,4 @@ const Hospital = () => {
   );
 };
 
-export default Hospital;
+export default Hospitals;
