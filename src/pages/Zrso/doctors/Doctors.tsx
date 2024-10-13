@@ -58,7 +58,7 @@ const Doctors = () => {
       <div className="mx-auto max-w-270">
         <Breadcrumb pageName="Doctors" />
 
-        <Table listData={doctorsData} />
+        <Table doctorData={doctorsData} />
       </div>
     </>
   );

@@ -1,65 +1,59 @@
 import { useRef, useState } from "react";
-import ClickOutside from "../../../../components/ClickOutside";
-import Pagination from "../../../../components/Pagination/Pagination";
 
-const Table = () => {
+import Pagination from "../../../../components/Pagination/Pagination";
+import { DoctorTablePropsTypes } from "../types/TableTypes";
+
+const Table = ({ doctorData }: { doctorData: DoctorTablePropsTypes }) => {
   const [isOpen, setIsOpen] = useState<number | null>(null);
   const actionRef = useRef();
-  const handleToggle = (index: number) => {
-    console.log("index", typeof index);
-    setIsOpen(isOpen === index ? null : index);
+  const handleToggle = (e: React.MouseEvent, id: number) => {
+    console.log("index", typeof id);
+    e.stopPropagation();
+    setIsOpen(isOpen === id ? null : id);
   };
 
   const onPageChange = () => {
     console.log("page change");
   };
+  const handleClickOutside = () => {
+    setIsOpen(null); // Close the popup when clicking outside
+  };
 
-  console.log("isOpen", isOpen);
+  const editFunc = (e: React.MouseEvent, id: number) => {
+    e.stopPropagation();
+    console.log("id", id);
+  };
 
-  const doctors = [
-    {
-      name: "Musharof Chowdhury",
-      position: "Multidisciplinary Web Entrepreneur",
-      email: "musharof@example.com",
-      role: "Owner",
-    },
-    {
-      name: "Naimur Rahman",
-      position: "Website Front-end Developer",
-      email: "naimurrahman@example.com",
-      role: "Member",
-    },
-    {
-      name: "Shafiq Hammad",
-      position: "Regional Paradigm Technician",
-      email: "shafiq.hd@example.com",
-      role: "Moderator",
-    },
-    {
-      name: "Alex Semuyel",
-      position: "Applications Engineer",
-      email: "alex.semuel@example.com",
-      role: "Admin",
-    },
-  ];
+  const deleteFunc = (e: React.MouseEvent, id: number) => {
+    e.stopPropagation();
+    console.log("id", id);
+  };
+
+  const detailFunc = (e: React.MouseEvent, id: number) => {
+    e.stopPropagation();
+    console.log("id", id);
+  };
 
   return (
     <>
-      <div className="w-full overflow-x-auto">
-        <div className="">
+      <div className="w-full overflow-x-auto rounded-t-2xl bg-white dark:bg-boxdark ">
+        <div className="min-w-[1170px] ">
           {/* Table Header */}
-          <div className="grid grid-cols-12 rounded-t-[10px] bg-primary px-5 py-4 lg:px-7.5 2xl:px-11">
-            <div className="col-span-3">
+          <div className="grid grid-cols-12 gap-5  bg-primary px-5 py-4 lg:px-7.5 2xl:px-11">
+            <div className="col-span-2">
               <h5 className="font-medium text-white">Name</h5>
-            </div>
-            <div className="col-span-3">
-              <h5 className="font-medium text-white">Position</h5>
             </div>
             <div className="col-span-3">
               <h5 className="font-medium text-white">Email</h5>
             </div>
+            <div className="col-span-3">
+              <h5 className="font-medium text-white">Specialties</h5>
+            </div>
             <div className="col-span-2">
-              <h5 className="font-medium text-white">Role</h5>
+              <h5 className="font-medium text-white">Qualifications</h5>
+            </div>
+            <div className="col-span-1">
+              <h5 className="font-medium text-white">Experience</h5>
             </div>
             <div className="col-span-1">
               <h5 className="text-right font-medium text-white">Edit</h5>
@@ -68,19 +62,14 @@ const Table = () => {
 
           {/* Table Body */}
           <div className="bg-white dark:bg-boxdark ">
-            {doctors.map((doctor, index) => (
+            {doctorData.map((doctor, index) => (
               <div
-                key={index}
-                className="grid grid-cols-12 border-t border-[#EEEEEE] px-5 py-4 dark:border-strokedark lg:px-7.5 2xl:px-11"
+                key={doctor.id}
+                className="grid grid-cols-12 gap-5 border-t border-[#EEEEEE] px-5 py-4 dark:border-strokedark lg:px-7.5 2xl:px-11"
               >
-                <div className="col-span-3">
+                <div className="col-span-2">
                   <p className="text-[#637381] dark:text-bodydark">
                     {doctor.name}
-                  </p>
-                </div>
-                <div className="col-span-3">
-                  <p className="text-[#637381] dark:text-bodydark">
-                    {doctor.position}
                   </p>
                 </div>
                 <div className="col-span-3">
@@ -88,18 +77,27 @@ const Table = () => {
                     {doctor.email}
                   </p>
                 </div>
-                <div className="col-span-2">
+                <div className="col-span-3">
                   <p className="text-[#637381] dark:text-bodydark">
-                    {doctor.role}
+                    {doctor.specialties}
                   </p>
                 </div>
-                {/* <ClickOutside
-                  onClick={() => setIsOpen(false)}
-                  className="relative"
-                > */}
+
+                <div className="col-span-2">
+                  <p className="text-[#637381] dark:text-bodydark">
+                    {doctor.qualifications}
+                  </p>
+                </div>
+
+                <div className="col-span-1">
+                  <p className="text-[#637381] dark:text-bodydark">
+                    {doctor.experience}
+                  </p>
+                </div>
+
                 <div className="col-span-1 relative">
                   <button
-                    onClick={() => handleToggle(index)}
+                    onClick={(e) => handleToggle(e, doctor.id)}
                     className="float-right inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm text-black shadow-11 hover:text-primary dark:bg-meta-4 dark:text-white dark:shadow-none"
                   >
                     Action
@@ -118,32 +116,36 @@ const Table = () => {
                     </svg>
                   </button>
 
-                  {isOpen === index && (
-                    <div className="absolute right-0 top-full z-1 mt-1 w-full max-w-39.5 rounded-[5px] bg-white py-2.5 shadow-12 dark:bg-boxdark">
-                      <button className="flex w-full px-4 py-2 text-sm hover:bg-whiter hover:text-primary dark:hover:bg-meta-4">
+                  {isOpen === doctor.id && (
+                    <div className="absolute right-0 top-full z-1 mt-1 w-full max-w-39.5 rounded-[5px] bg-[#f9f9f9] py-2.5 shadow-12 dark:bg-boxdark">
+                      <button
+                        className="flex w-full px-4 py-2 text-sm hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
+                        onClick={(e) => editFunc(e, doctor.id)}
+                      >
                         Edit
                       </button>
-                      <button className="flex w-full px-4 py-2 text-sm hover:bg-whiter hover:text-primary dark:hover:bg-meta-4">
+                      <button
+                        className="flex w-full px-4 py-2 text-sm hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
+                        onClick={(e) => deleteFunc(e, doctor.id)}
+                      >
                         Delete
                       </button>
-                      <button className="flex w-full px-4 py-2 text-sm hover:bg-whiter hover:text-primary dark:hover:bg-meta-4">
+                      <button
+                        className="flex w-full px-4 py-2 text-sm hover:bg-whiter hover:text-primary dark:hover:bg-meta-4"
+                        onClick={(e) => detailFunc(e, doctor.id)}
+                      >
                         Details
                       </button>
                     </div>
                   )}
                 </div>
-                {/* </ClickOutside> */}
               </div>
             ))}
           </div>
-
-          <Pagination
-            currentPage={2}
-            totalPages={5}
-            onPageChange={onPageChange}
-          />
         </div>
       </div>
+
+      <Pagination currentPage={2} totalPages={5} onPageChange={onPageChange} />
     </>
   );
 };
